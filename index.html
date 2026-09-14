@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Archipiélago de las Sombras Luminosas - Experiencia Creativa & Bioluminiscente</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Quicksand', 'sans-serif'],
+            display: ['Fredoka', 'sans-serif'],
+          },
+          colors: {
+            ocean: {
+              950: '#02050e',
+              900: '#061024',
+              800: '#0d2142',
+              700: '#15325e',
+              600: '#1d4885',
+              400: '#38bdf8',
+            },
+            neon: {
+              cyan: '#00f5d4',
+              magenta: '#f72585',
+              purple: '#7b2cbf',
+              gold: '#ffd166',
+              lime: '#70e000',
+              blue: '#4cc9f0'
+            }
+          },
+          boxShadow: {
+            'glow-cyan': '0 0 25px rgba(0, 245, 212, 0.5)',
+            'glow-magenta': '0 0 25px rgba(247, 37, 133, 0.5)',
+            'glow-gold': '0 0 25px rgba(255, 209, 102, 0.5)',
+            'glow-purple': '0 0 25px rgba(123, 44, 191, 0.6)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Estilos dinámicos y coloridos */
+    body {
+      background: radial-gradient(circle at 50% 20%, #0d2142 0%, #061024 60%, #02050e 100%);
+      color: #f1f5f9;
+      user-select: none;
+      overflow-x: hidden;
+    }
+
+    /* Fondo de Partículas Interactivo */
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Cristal neón multicolor */
+    .glass-neon {
+      background: rgba(13, 33, 66, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+
+    .glass-neon-card {
+      background: linear-gradient(135deg, rgba(21, 50, 94, 0.8) 0%, rgba(6, 16, 36, 0.9) 100%);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 245, 212, 0.25);
+    }
+
+    /* Gradiente animado en bordes */
+    .animated-gradient-border {
+      position: relative;
+      border-radius: 1rem;
+    }
+    .animated-gradient-border::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 1.1rem;
+      background: linear-gradient(45deg, #00f5d4, #f72585, #ffd166, #7b2cbf, #70e000);
+      background-size: 300% 300%;
+      z-index: -1;
+      animation: borderGradient 6s ease infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes borderGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Animaciones Bioluminiscentes */
+    @keyframes pulseGlow {
+      0%, 100% { filter: drop-shadow(0 0 15px rgba(0,245,212,0.8)); transform: scale(1); }
+      50% { filter: drop-shadow(0 0 30px rgba(247,37,133,0.9)); transform: scale(1.04); }
+    }
+
+    .biolum-float {
+      animation: pulseGlow 4s infinite ease-in-out;
+    }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(2deg); }
+    }
+
+    .floating-element {
+      animation: floaty 5s ease-in-out infinite;
+    }
+
+    /* Scrollbar Neón */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #061024;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #00f5d4, #f72585);
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body class="h-full flex flex-col font-sans antialiased text-slate-100 relative min-h-screen">
+
+  <!-- Lienzo de fondo de partículas marinas luminosas -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Notification Toast Container -->
+  <div id="toast-container" class="fixed top-20 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+  <!-- Barra de navegación superior estilizada -->
+  <header class="w-full glass-neon border-b border-neon-cyan/30 sticky top-0 z-40 px-4 py-3 shadow-2xl">
+    <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-3">
+      
+      <!-- Brand & Title -->
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('story')">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-neon-cyan via-neon-blue to-neon-purple p-0.5 shadow-glow-cyan floating-element">
+          <div class="w-full h-full bg-ocean-950 rounded-[14px] flex items-center justify-center text-neon-cyan text-2xl">
+            <i class="fa-solid fa-water-waves"></i>
+          </div>
+        </div>
+        <div>
+          <h1 class="font-display font-bold text-xl md:text-2xl bg-gradient-to-r from-neon-cyan via-neon-gold to-neon-magenta bg-clip-text text-transparent leading-tight">
+            El Archipiélago de las Sombras Luminosas
+          </h1>
+          <p class="text-xs text-neon-blue font-medium flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-neon-cyan animate-ping"></span> Experiencia Narrativa Interactiva
+          </p>
+        </div>
+      </div>
+
+      <!-- Menú de pestañas dinámicas con colores neón -->
+      <nav class="flex items-center gap-1.5 bg-ocean-950/80 p-1.5 rounded-2xl border border-neon-cyan/20">
+        <button id="btn-tab-story" onclick="switchTab('story')" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 bg-gradient-to-r from-neon-cyan to-neon-blue text-ocean-950 shadow-glow-cyan flex items-center gap-2">
+          <i class="fa-solid fa-book-open"></i> <span>Historia</span>
+        </button>
+        <button id="btn-tab-bestiary" onclick="switchTab('bestiary')" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-ocean-800/60 transition-all duration-300 flex items-center gap-2">
+          <i class="fa-solid fa-fish-fins text-neon-gold"></i> <span>Bestiario</span>
+        </button>
+        <button id="btn-tab-logbook" onclick="switchTab('logbook')" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-ocean-800/60 transition-all duration-300 flex items-center gap-2">
+          <i class="fa-solid fa-journal-whills text-neon-magenta"></i> <span>Bitácora</span>
+        </button>
+        <button id="btn-tab-creator" onclick="switchTab('creator')" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-ocean-800/60 transition-all duration-300 flex items-center gap-2">
+          <i class="fa-solid fa-wand-magic-sparkles text-neon-cyan"></i> <span>Laboratorio</span>
+        </button>
+        <button id="btn-tab-teacher" onclick="switchTab('teacher')" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-ocean-800/60 transition-all duration-300 flex items-center gap-2">
+          <i class="fa-solid fa-graduation-cap text-neon-lime"></i> <span>Guía Docente</span>
+        </button>
+      </nav>
+
+      <!-- Botón de Audio Sintetizado y Efectos -->
+      <div class="flex items-center gap-2">
+        <button id="audio-toggle" onclick="toggleAudio()" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-ocean-800 to-ocean-700 hover:from-ocean-700 hover:to-ocean-600 border border-neon-cyan/40 text-neon-cyan text-xs font-bold flex items-center gap-2 transition-all shadow-lg active:scale-95" title="Activar música y efectos">
+          <i id="audio-icon" class="fa-solid fa-volume-xmark text-neon-magenta"></i>
+          <span class="hidden sm:inline">Sonido Marino</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Contenido principal -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 relative z-10 grid grid-cols-1 gap-6">
+
+    <!-- ==================== VISTA 1: HISTORIA BIFURCADA Y NAVEGACIÓN ==================== -->
+    <section id="view-story" class="space-y-6">
+
+      <!-- Indicador de Navegación & Medidor de Profundidad -->
+      <div class="glass-neon p-4 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4 border-l-4 border-l-neon-cyan">
+        <div class="flex items-center gap-3 w-full md:w-auto">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-neon-purple to-neon-cyan p-0.5 shadow-glow-cyan flex-shrink-0">
+            <div class="w-full h-full bg-ocean-950 rounded-[14px] flex items-center justify-center text-neon-gold text-xl">
+              <i class="fa-solid fa-compass-drafting animate-spin-slow"></i>
+            </div>
+          </div>
+          <div>
+            <span class="text-xs uppercase tracking-widest text-neon-cyan font-bold flex items-center gap-1">
+              <i class="fa-solid fa-water"></i> Panel de Inmersión del Nautilus II
+            </span>
+            <h2 id="node-location" class="text-base md:text-lg font-bold text-white">Profundidad: 150m &bull; Canal de las Luces</h2>
+          </div>
+        </div>
+
+        <!-- Barra de Progreso de Profundidad -->
+        <div class="w-full md:w-64 bg-ocean-950 rounded-full h-3.5 p-0.5 border border-neon-cyan/30 flex items-center">
+          <div id="depth-bar" class="bg-gradient-to-r from-neon-cyan via-neon-gold to-neon-magenta h-full rounded-full transition-all duration-700 w-1/4 shadow-glow-cyan"></div>
+        </div>
+
+        <!-- Insignias Conseguidas -->
+        <div class="flex items-center gap-2 w-full md:w-auto justify-end">
+          <div id="badge-empathy" class="px-3 py-1.5 rounded-xl bg-ocean-950/80 border border-slate-700 text-slate-500 text-xs font-bold flex items-center gap-2 transition-all">
+            <i class="fa-solid fa-eye"></i> <span>Mirada Profunda</span>
+          </div>
+          <div id="badge-ecology" class="px-3 py-1.5 rounded-xl bg-ocean-950/80 border border-slate-700 text-slate-500 text-xs font-bold flex items-center gap-2 transition-all">
+            <i class="fa-solid fa-seedling"></i> <span>Equilibrio Natural</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjeta Principal de la Escena Narrativa -->
+      <div class="animated-gradient-border shadow-2xl">
+        <div class="glass-neon-card rounded-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 relative">
+          
+          <!-- Lado Izquierdo: Avatar de la Escena / Ilustración Lumínica -->
+          <div class="lg:col-span-5 bg-gradient-to-b from-ocean-950 via-ocean-900 to-ocean-950 p-8 flex flex-col items-center justify-center min-h-[280px] relative overflow-hidden border-b lg:border-b-0 lg:border-r border-neon-cyan/20">
+            
+            <!-- Resplandor ambiental de escena -->
+            <div id="scene-bg-glow" class="absolute w-72 h-72 bg-gradient-to-tr from-neon-cyan via-neon-magenta to-neon-purple opacity-20 rounded-full blur-3xl biolum-float pointer-events-none"></div>
+
+            <!-- Avatar principal animado -->
+            <div id="scene-avatar" class="relative z-10 w-36 h-36 rounded-full bg-ocean-950 border-4 border-neon-cyan flex items-center justify-center text-7xl text-neon-cyan shadow-glow-cyan mb-4 transition-all duration-500 biolum-float">
+              <i class="fa-solid fa-ship"></i>
+            </div>
+
+            <!-- Badge del capítulo -->
+            <div id="scene-badge" class="relative z-10 text-center">
+              <span class="px-4 py-1.5 rounded-full text-xs font-extrabold bg-gradient-to-r from-neon-gold via-neon-magenta to-neon-purple text-ocean-950 shadow-glow-gold">
+                CAPÍTULO <span id="chapter-num">1</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- Lado Derecho: Contenido Narrativo y Decisiones -->
+          <div class="lg:col-span-7 p-6 md:p-8 flex flex-col justify-between space-y-6">
+            <div>
+              <h3 id="node-title" class="text-2xl md:text-3xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-neon-cyan to-neon-gold mb-3 flex items-center gap-3">
+                El Descenso en el Nautilus II
+              </h3>
+              <p id="node-text" class="text-slate-200 leading-relaxed text-base md:text-lg mb-4 font-normal">
+                Cargando relato marino...
+              </p>
+
+              <!-- Caja de Reflexión Pedagógica con brillo neón -->
+              <div id="node-reflection-box" class="hidden p-4 rounded-2xl bg-gradient-to-r from-neon-purple/20 to-neon-magenta/20 border border-neon-magenta/40 text-pink-200 text-sm italic shadow-glow-magenta relative overflow-hidden">
+                <div class="flex items-start gap-3">
+                  <div class="p-2 bg-neon-magenta/20 rounded-xl text-neon-gold text-lg">
+                    <i class="fa-solid fa-lightbulb"></i>
+                  </div>
+                  <div>
+                    <span class="font-bold text-neon-gold uppercase text-xs tracking-wider block mb-1">Para Reflexionar en Equipo:</span>
+                    <span id="node-reflection-text"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Opciones de Decisiones Bifurcadas -->
+            <div class="space-y-3 pt-4 border-t border-neon-cyan/20">
+              <p class="text-xs uppercase tracking-widest text-neon-cyan font-bold mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-code-branch"></i> ¿Qué camino tomará la tripulación?
+              </p>
+              <div id="options-container" class="space-y-3">
+                <!-- Generado dinámicamente -->
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==================== VISTA 2: BESTIARIO MARINO ILUMINADO ==================== -->
+    <section id="view-bestiary" class="hidden space-y-6">
+      <div class="glass-neon p-6 rounded-2xl border border-neon-gold/30">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6 pb-4 border-b border-neon-gold/20">
+          <div>
+            <h2 class="text-2xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-neon-gold via-neon-magenta to-neon-cyan flex items-center gap-3">
+              <i class="fa-solid fa-fish-fins text-neon-gold"></i> Enciclopedia del Abismo Bioluminiscente
+            </h2>
+            <p class="text-slate-300 text-sm">Descubre a los fascinantes habitantes de las profundidades marinas y sus adaptaciones luminosas.</p>
+          </div>
+          <span class="px-3 py-1 rounded-full bg-neon-gold/20 border border-neon-gold text-neon-gold text-xs font-bold">
+            4 Especies Registradas
+          </span>
+        </div>
+
+        <!-- Rejilla de criaturas mágicas -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          
+          <!-- Criatura 1 -->
+          <div class="glass-neon-card p-5 rounded-2xl border border-neon-cyan/30 hover:border-neon-cyan hover:shadow-glow-cyan transition-all duration-300 group">
+            <div class="w-16 h-16 rounded-2xl bg-ocean-950 border border-neon-cyan text-neon-cyan text-3xl flex items-center justify-center mb-4 group-hover:scale-110 transition shadow-glow-cyan">
+              <i class="fa-solid fa-person-swimming"></i>
+            </div>
+            <h3 class="font-display font-bold text-lg text-white mb-1">Sirena del Abismo (Aura)</h3>
+            <span class="text-xs text-neon-cyan font-bold block mb-2">Bioluminiscencia: Cian Eléctrico</span>
+            <p class="text-xs text-slate-300 leading-relaxed mb-3">
+              Sin aletas brillantes ni coronas doradas. Piel translúcida adaptable que emite ráfagas de luz pulsante para comunicarse en la penumbra.
+            </p>
+            <div class="text-[10px] bg-ocean-950 p-2 rounded-lg border border-ocean-700 text-slate-400">
+              <strong class="text-neon-gold">Lección:</strong> Las apariencias no definen el corazón de las criaturas.
+            </div>
+          </div>
+
+          <!-- Criatura 2 -->
+          <div class="glass-neon-card p-5 rounded-2xl border border-neon-magenta/30 hover:border-neon-magenta hover:shadow-glow-magenta transition-all duration-300 group">
+            <div class="w-16 h-16 rounded-2xl bg-ocean-950 border border-neon-magenta text-neon-magenta text-3xl flex items-center justify-center mb-4 group-hover:scale-110 transition shadow-glow-magenta">
+              <i class="fa-solid fa-shield-cat"></i>
+            </div>
+            <h3 class="font-display font-bold text-lg text-white mb-1">Guardián del Coral Gris</h3>
+            <span class="text-xs text-neon-magenta font-bold block mb-2">Bioluminiscencia: Púrpura Profundo</span>
+            <p class="text-xs text-slate-300 leading-relaxed mb-3">
+              Ser de caparazón basáltico con líquenes marinos bioluminiscentes. Protege el arrecife de cambios bruscos de corriente.
+            </p>
+            <div class="text-[10px] bg-ocean-950 p-2 rounded-lg border border-ocean-700 text-slate-400">
+              <strong class="text-neon-gold">Lección:</strong> La paciencia y el respeto son la llave del ecosistema.
+            </div>
+          </div>
+
+          <!-- Criatura 3 -->
+          <div class="glass-neon-card p-5 rounded-2xl border border-neon-gold/30 hover:border-neon-gold hover:shadow-glow-gold transition-all duration-300 group">
+            <div class="w-16 h-16 rounded-2xl bg-ocean-950 border border-neon-gold text-neon-gold text-3xl flex items-center justify-center mb-4 group-hover:scale-110 transition shadow-glow-gold">
+              <i class="fa-solid fa-spaghetti-monster-flying"></i>
+            </div>
+            <h3 class="font-display font-bold text-lg text-white mb-1">Medusa Sombrilla de Cristal</h3>
+            <span class="text-xs text-neon-gold font-bold block mb-2">Bioluminiscencia: Ámbar Neón</span>
+            <p class="text-xs text-slate-300 leading-relaxed mb-3">
+              Flota atrapando partículas de sedimento sobrantes. Funciona como el sistema de filtrado natural del Archipiélago.
+            </p>
+            <div class="text-[10px] bg-ocean-950 p-2 rounded-lg border border-ocean-700 text-slate-400">
+              <strong class="text-neon-gold">Lección:</strong> Cada ser, por pequeño que sea, tiene un rol vital.
+            </div>
+          </div>
+
+          <!-- Criatura 4 -->
+          <div class="glass-neon-card p-5 rounded-2xl border border-neon-lime/30 hover:border-neon-lime hover:shadow-glow-cyan transition-all duration-300 group">
+            <div class="w-16 h-16 rounded-2xl bg-ocean-950 border border-neon-lime text-neon-lime text-3xl flex items-center justify-center mb-4 group-hover:scale-110 transition shadow-glow-cyan">
+              <i class="fa-solid fa-shrimp"></i>
+            </div>
+            <h3 class="font-display font-bold text-lg text-white mb-1">Camarón Destello Arcoíris</h3>
+            <span class="text-xs text-neon-lime font-bold block mb-2">Bioluminiscencia: Verde Lima Neón</span>
+            <p class="text-xs text-slate-300 leading-relaxed mb-3">
+              Genera destellos deslumbrantes en cadena para ahuyentar depredadores y guiar a los navegantes perdidos.
+            </p>
+            <div class="text-[10px] bg-ocean-950 p-2 rounded-lg border border-ocean-700 text-slate-400">
+              <strong class="text-neon-gold">Lección:</strong> La cooperación multiplica la luz en la oscuridad.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VISTA 3: BITÁCORA DEL EXPLORADOR ==================== -->
+    <section id="view-logbook" class="hidden space-y-6">
+      <div class="glass-neon p-6 rounded-2xl border border-neon-magenta/30">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-neon-magenta/20">
+          <div>
+            <h2 class="text-2xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-neon-magenta via-neon-purple to-neon-cyan flex items-center gap-3">
+              <i class="fa-solid fa-journal-whills text-neon-magenta"></i> Bitácora del Explorador Marítimo
+            </h2>
+            <p class="text-slate-300 text-sm">Registra tus observaciones críticas, hipótesis y aprendizajes del equipo.</p>
+          </div>
+          <button onclick="saveLogbook()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-neon-magenta to-neon-purple text-white font-bold hover:brightness-110 transition shadow-glow-magenta text-sm flex items-center gap-2 active:scale-95">
+            <i class="fa-solid fa-floppy-disk"></i> Guardar Registros
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="space-y-5">
+            <div class="glass-neon-card p-4 rounded-2xl border border-neon-cyan/20">
+              <label class="block text-sm font-bold text-neon-cyan mb-1 flex items-center gap-2">
+                <i class="fa-solid fa-pen-nib"></i> 1. Reflexión: Apariencias vs. Realidad
+              </label>
+              <p class="text-xs text-slate-400 mb-2">¿En qué se diferencian las criaturas del abismo de los monstruos tradicionales? ¿Por qué es riesgoso juzgar solo por la primera impresión visual?</p>
+              <textarea id="log-reflection-1" rows="3" class="w-full p-3 rounded-xl bg-ocean-950/90 border border-ocean-700 text-slate-100 focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan outline-none text-sm transition" placeholder="Escribe aquí las conclusiones de tu tripulación..."></textarea>
+            </div>
+
+            <div class="glass-neon-card p-4 rounded-2xl border border-neon-gold/20">
+              <label class="block text-sm font-bold text-neon-gold mb-1 flex items-center gap-2">
+                <i class="fa-solid fa-seedling"></i> 2. Impacto Ambiental & Bioluminiscencia
+              </label>
+              <p class="text-xs text-slate-400 mb-2">¿Cómo afecta la contaminación o los sedimentos de la superficie al brillo natural del arrecife y a la comunicación de las especies?</p>
+              <textarea id="log-reflection-2" rows="3" class="w-full p-3 rounded-xl bg-ocean-950/90 border border-ocean-700 text-slate-100 focus:border-neon-gold focus:ring-1 focus:ring-neon-gold outline-none text-sm transition" placeholder="Analiza la relación entre causa y efecto ecológico..."></textarea>
+            </div>
+          </div>
+
+          <div class="space-y-5">
+            <!-- Insignias Conseguidas -->
+            <div class="glass-neon-card p-5 rounded-2xl border border-neon-purple/30">
+              <h3 class="text-sm font-bold text-neon-gold mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-award text-neon-gold"></i> Insignias Desbloqueadas
+              </h3>
+              <div id="logbook-badges-list" class="space-y-2">
+                <p class="text-xs text-slate-400 italic">Toma decisiones reflexivas durante la navegación para obtener insignias pedagógicas.</p>
+              </div>
+            </div>
+
+            <!-- Historial de decisiones -->
+            <div class="glass-neon-card p-5 rounded-2xl border border-neon-cyan/20">
+              <h3 class="text-sm font-bold text-neon-cyan mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-route"></i> Historial de Decisiones de la Tripulación
+              </h3>
+              <ul id="history-log" class="text-xs text-slate-300 space-y-2 max-h-48 overflow-y-auto pr-1">
+                <li class="text-slate-500 italic">Aún no has tomado decisiones en esta expedición.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VISTA 4: LABORATORIO BIOLUMINISCENTE ==================== -->
+    <section id="view-creator" class="hidden space-y-6">
+      <div class="glass-neon p-6 rounded-2xl border border-neon-cyan/40">
+        <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 mb-4 pb-4 border-b border-neon-cyan/20">
+          <div>
+            <h2 class="text-2xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan via-neon-gold to-neon-magenta flex items-center gap-3">
+              <i class="fa-solid fa-wand-magic-sparkles text-neon-cyan"></i> Laboratorio de Criaturas de Luz
+            </h2>
+            <p class="text-slate-300 text-sm">Diseña una nueva especie dotada de patrones de luz neón para sobrevivir en el abismo marino.</p>
+          </div>
+
+          <!-- Herramientas y Paleta Neón -->
+          <div class="flex flex-wrap items-center gap-3 bg-ocean-950 p-2.5 rounded-2xl border border-neon-cyan/30">
+            <!-- Paleta de Colores Neón -->
+            <div class="flex items-center gap-1.5 border-r border-ocean-700 pr-3">
+              <button onclick="setColor('#00f5d4')" class="w-7 h-7 rounded-full bg-[#00f5d4] ring-2 ring-white/30 hover:scale-125 transition shadow-glow-cyan" title="Cian"></button>
+              <button onclick="setColor('#f72585')" class="w-7 h-7 rounded-full bg-[#f72585] ring-2 ring-white/30 hover:scale-125 transition shadow-glow-magenta" title="Magenta"></button>
+              <button onclick="setColor('#ffd166')" class="w-7 h-7 rounded-full bg-[#ffd166] ring-2 ring-white/30 hover:scale-125 transition shadow-glow-gold" title="Dorado"></button>
+              <button onclick="setColor('#70e000')" class="w-7 h-7 rounded-full bg-[#70e000] ring-2 ring-white/30 hover:scale-125 transition" title="Verde Lima"></button>
+              <button onclick="setColor('#7b2cbf')" class="w-7 h-7 rounded-full bg-[#7b2cbf] ring-2 ring-white/30 hover:scale-125 transition shadow-glow-purple" title="Púrpura"></button>
+              <button onclick="setColor('#ffffff')" class="w-7 h-7 rounded-full bg-white ring-2 ring-white/30 hover:scale-125 transition" title="Luz Blanca"></button>
+            </div>
+
+            <!-- Tamaño de Pincel -->
+            <div class="flex items-center gap-1.5 text-xs text-slate-300 border-r border-ocean-700 pr-3">
+              <span>Grosor:</span>
+              <button onclick="setLineWidth(3)" class="w-6 h-6 rounded bg-ocean-800 text-neon-cyan font-bold hover:bg-ocean-700">S</button>
+              <button onclick="setLineWidth(8)" class="w-6 h-6 rounded bg-ocean-800 text-neon-cyan font-bold hover:bg-ocean-700">M</button>
+              <button onclick="setLineWidth(16)" class="w-6 h-6 rounded bg-ocean-800 text-neon-cyan font-bold hover:bg-ocean-700">L</button>
+            </div>
+
+            <!-- Acciones -->
+            <button onclick="clearCanvas()" class="px-3 py-1.5 rounded-xl bg-red-500/20 border border-red-500/40 text-red-300 hover:bg-red-500/40 text-xs font-bold transition">
+              <i class="fa-solid fa-trash-can mr-1"></i> Limpiar
+            </button>
+            <button onclick="spawnCreatureFromCanvas()" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-neon-cyan to-neon-gold text-ocean-950 font-extrabold hover:brightness-110 text-xs transition shadow-glow-cyan">
+              <i class="fa-solid fa-paper-plane mr-1"></i> Liberar al Mar
+            </button>
+          </div>
+        </div>
+
+        <!-- Canvas interactivo con marco resplandeciente -->
+        <div class="relative w-full h-96 bg-ocean-950 rounded-2xl border-2 border-neon-cyan/40 overflow-hidden shadow-2xl flex items-center justify-center">
+          <canvas id="creature-canvas" class="w-full h-full cursor-crosshair"></canvas>
+          <div class="absolute bottom-3 left-3 bg-ocean-900/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-neon-cyan/30 text-xs text-neon-cyan flex items-center gap-2 pointer-events-none">
+            <i class="fa-solid fa-hand-pointer animate-bounce"></i> Dibuja sosteniendo el clic o pantalla táctil
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VISTA 5: GUÍA DOCENTE ==================== -->
+    <section id="view-teacher" class="hidden space-y-6">
+      <div class="glass-neon p-6 rounded-2xl border border-neon-lime/30 space-y-6">
+        <div>
+          <h2 class="text-2xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-neon-lime via-neon-cyan to-neon-gold flex items-center gap-3">
+            <i class="fa-solid fa-graduation-cap text-neon-lime"></i> Guía Didáctica y Rúbrica para el Docente
+          </h2>
+          <p class="text-slate-300 text-sm mt-1">Marco pedagógico para la facilitación del debate crítico en el aula y la evaluación formativa.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="glass-neon-card p-4 rounded-2xl border border-neon-cyan/30">
+            <h3 class="text-sm font-bold text-neon-cyan mb-2 flex items-center gap-2">
+              <i class="fa-solid fa-bullseye"></i> Objetivo Didáctico
+            </h3>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Fomentar la empatía, el cuestionamiento reflexivo de los prejuicios basados en la apariencia física y el aprendizaje de ciencias naturales sobre las adaptaciones lumínicas.
+            </p>
+          </div>
+          <div class="glass-neon-card p-4 rounded-2xl border border-neon-gold/30">
+            <h3 class="text-sm font-bold text-neon-gold mb-2 flex items-center gap-2">
+              <i class="fa-solid fa-users"></i> Dinámica en Equipos
+            </h3>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Se recomienda organizar a los alumnos en "Tripulaciones del Nautilus" (3 a 4 estudiantes) para discutir y consensuar cada decisión antes de marcarla en pantalla.
+            </p>
+          </div>
+          <div class="glass-neon-card p-4 rounded-2xl border border-neon-magenta/30">
+            <h3 class="text-sm font-bold text-neon-magenta mb-2 flex items-center gap-2">
+              <i class="fa-solid fa-diagram-project"></i> Articulación Curricular
+            </h3>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Integración con Lengua Castellana (Lectura inferencial y argumentación), Ciencias Naturales (Ecosistemas marinos) y Educación Emocional.
+            </p>
+          </div>
+        </div>
+
+        <!-- Rúbrica Pedagógica -->
+        <div class="glass-neon-card p-5 rounded-2xl border border-ocean-600">
+          <h3 class="text-lg font-bold text-white mb-3">Rúbrica de Evaluación Formativa</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="bg-ocean-950 text-neon-cyan border-b border-ocean-700">
+                  <th class="p-3 font-bold">Criterio Pedagógico</th>
+                  <th class="p-3 font-bold text-neon-gold">Nivel Experto (3)</th>
+                  <th class="p-3 font-bold text-neon-blue">Nivel En Proceso (2)</th>
+                  <th class="p-3 font-bold text-slate-400">Nivel Inicial (1)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-ocean-800 text-slate-300">
+                <tr>
+                  <td class="p-3 font-bold text-white">Análisis de Apariencias</td>
+                  <td class="p-3">Argumenta sus elecciones superando los estereotipos estéticos visuales iniciales.</td>
+                  <td class="p-3">Muestra curiosidad, aunque a veces duda frente a criaturas desconocidas.</td>
+                  <td class="p-3">Toma decisiones basadas únicamente en el temor o el rechazo visual.</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-bold text-white">Conciencia Ecológica</td>
+                  <td class="p-3">Relaciona el equilibrio de la luz marina con las acciones humanas en la superficie.</td>
+                  <td class="p-3">Reconoce la bioluminiscencia pero le cuesta identificar las causas del deterioro.</td>
+                  <td class="p-3">Confunde las adaptaciones biológicas con magia sin causa ambiental.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    /* ==================== SISTEMA DE FONDO CANVAS ANIMADO ==================== */
+    const bgCanvas = document.getElementById('bg-canvas');
+    const bgCtx = bgCanvas.getContext('2d');
+    let bgParticles = [];
+
+    function resizeBgCanvas() {
+      bgCanvas.width = window.innerWidth;
+      bgCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeBgCanvas);
+    resizeBgCanvas();
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * bgCanvas.width;
+        this.y = Math.random() * bgCanvas.height;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.speedY = -Math.random() * 0.6 - 0.2;
+        const colors = ['#00f5d4', '#f72585', '#ffd166', '#7b2cbf', '#4cc9f0'];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.alpha = Math.random() * 0.7 + 0.2;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.y < -10 || this.x < -10 || this.x > bgCanvas.width + 10) {
+          this.reset();
+          this.y = bgCanvas.height + 10;
+        }
+      }
+      draw() {
+        bgCtx.save();
+        bgCtx.globalAlpha = this.alpha;
+        bgCtx.shadowBlur = 12;
+        bgCtx.shadowColor = this.color;
+        bgCtx.fillStyle = this.color;
+        bgCtx.beginPath();
+        bgCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        bgCtx.fill();
+        bgCtx.restore();
+      }
+    }
+
+    for (let i = 0; i < 45; i++) {
+      bgParticles.push(new Particle());
+    }
+
+    function animateBg() {
+      bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+      bgParticles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateBg);
+    }
+    animateBg();
+
+    /* ==================== SINTETIZADOR DE AUDIO WEB AUDIO API ==================== */
+    let audioCtx = null;
+    let isPlayingAudio = false;
+
+    function playSoundEffect(freq = 440, type = 'sine', duration = 0.3) {
+      if (!isPlayingAudio) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch(e) {}
+    }
+
+    function playChime() {
+      if (!isPlayingAudio) return;
+      const notes = [523.25, 659.25, 783.99, 1046.50]; // Do, Mi, Sol, Do
+      notes.forEach((freq, index) => {
+        setTimeout(() => playSoundEffect(freq, 'sine', 0.4), index * 90);
+      });
+    }
+
+    function toggleAudio() {
+      const btnIcon = document.getElementById('audio-icon');
+
+      if (!isPlayingAudio) {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        isPlayingAudio = true;
+        btnIcon.className = "fa-solid fa-volume-high text-neon-cyan";
+        playChime();
+        showToast("Audio y efectos de sonido activados", "neon-cyan");
+      } else {
+        isPlayingAudio = false;
+        btnIcon.className = "fa-solid fa-volume-xmark text-neon-magenta";
+        showToast("Audio desactivado", "neon-magenta");
+      }
+    }
+
+    /* ==================== ÁRBOLES DE NARRATIVA Y LÓGICA ==================== */
+    const storyNodes = {
+      start: {
+        chapter: 1,
+        depthPercent: "25%",
+        title: "El Descenso en el Nautilus II",
+        location: "Profundidad: 150m • Canal de las Luces",
+        icon: "fa-ship",
+        text: "Te encuentras a bordo del submarino 'Nautilus II'. Las aguas del Archipiélago han comenzado a perder su resplandor natural. Repentinamente, los sensores detectan una silueta entre los arrecifes: no tiene cola reluciente ni tiara de conchas como en las leyendas antiguas. Su piel es translúcida, sus ojos están adaptados a la oscuridad absoluta y emite destellos cian desde sus palmas. ¡Es Aura, una sirena del abismo!",
+        reflection: "¿Qué expectativas previas teníamos sobre las criaturas marinas? ¿Cómo influye la apariencia en nuestros primeros sentimientos?",
+        options: [
+          {
+            text: "¡Su aspecto es extraño y desconocido! Preparen los escudos y redes por seguridad.",
+            next: "node_fear",
+            badge: null
+          },
+          {
+            text: "Mantengan la calma. Bajen la intensidad de los focos y envíen ráfagas de luz amigables.",
+            next: "node_empathy",
+            badge: "empathy"
+          }
+        ]
+      },
+
+      node_fear: {
+        chapter: 1,
+        depthPercent: "40%",
+        title: "El Asombro y la Cueva Sombría",
+        location: "Profundidad: 280m • Grieta del Abismo",
+        icon: "fa-triangle-exclamation",
+        text: "Al ver las redes, Aura se sobresalta. Emite una pulsación lumínica de alerta y se refugia en una gruta inaccesible. Al huir, deja caer un fragmento de cristal de coral opaco. La tripulación comprende que el miedo impulsivo bloqueó la oportunidad de comunicarse.",
+        reflection: "Cuestionamiento: Cuando nos asustamos de algo diferente, ¿podemos lastimar o alejar a quienes querían ayudarnos?",
+        options: [
+          {
+            text: "Recoger el cristal descolorido y transmitir señales pacíficas hacia la cueva.",
+            next: "node_reef_entry",
+            badge: null
+          }
+        ]
+      },
+
+      node_empathy: {
+        chapter: 1,
+        depthPercent: "50%",
+        title: "El Lenguaje de las Pulsaciones",
+        location: "Profundidad: 320m • Cueva Bioluminiscente",
+        icon: "fa-handshake-simple",
+        text: "Aura se aproxima pausadamente al cristal protector del Nautilus II. Al percibir la actitud respetuosa del equipo, responde con un parpadeo rítmico dorado. Les revela el 'Mapa de las Sombras' y les demuestra que la luz del arrecife no fue robada, sino asfixiada por sedimentos.",
+        reflection: "¡Gran decisión! La empatía y la paciencia abren las puertas a la verdadera comprensión.",
+        options: [
+          {
+            text: "Agradecer a Aura con luz e iniciar la travesía hacia el Arrecife del Coral Gris.",
+            next: "node_reef_entry",
+            badge: "empathy"
+          }
+        ]
+      },
+
+      node_reef_entry: {
+        chapter: 2,
+        depthPercent: "75%",
+        title: "El Arrecife del Coral Gris",
+        location: "Profundidad: 450m • Santuario Ancestral",
+        icon: "fa-shield-halved",
+        text: "Llegan al corazón del ecosistema. El coral yace descolorido por partículas suspendidas. El Guardián del Arrecife, un ser ancestral de rocas y algas brillantes, frena el paso: 'Solo quienes comprendan el pulso del agua restaurarán la vida sin romper la fragilidad marina'.",
+        reflection: "Desafío Ecológico: ¿Cómo limpiar una estructura delicada sin destruirla en el proceso?",
+        options: [
+          {
+            text: "Encender las hélices al máximo para soplar todo el sedimento rápidamente.",
+            next: "node_ending_c",
+            badge: null
+          },
+          {
+            text: "Escanear las corrientes marinas y emitir pulsos de luz para estimular la autolimpieza de las microalgas.",
+            next: "node_ending_a",
+            badge: "ecology"
+          }
+        ]
+      },
+
+      node_ending_a: {
+        chapter: 3,
+        depthPercent: "100%",
+        title: "Final A: Guardianes de la Luz Eterna",
+        location: "Profundidad: 500m • Abismo Resplandeciente",
+        icon: "fa-star",
+        text: "¡Éxito Absoluto! Las microalgas bioluminiscentes despiertan al unísono. Un destello multicolor recorre las ramificaciones del coral, disolviendo el sedimento suavemente. Aura y el Guardián nombran a la tripulación 'Protectores del Abismo'. Ahora regresarán a la superficie a difundir lo aprendido.",
+        reflection: "Misión Cumplida: Han demostrado que la empatía, la ciencia y la colaboración protegen la naturaleza.",
+        options: [
+          {
+            text: "Ir a la Bitácora del Explorador para registrar las conclusiones.",
+            action: "go_logbook"
+          },
+          {
+            text: "Iniciar una nueva expedición navegando otros caminos.",
+            next: "start"
+          }
+        ]
+      },
+
+      node_ending_c: {
+        chapter: 3,
+        depthPercent: "60%",
+        title: "Final C: La Lección de las Corrientes",
+        location: "Profundidad: 450m • Turbulencia Marina",
+        icon: "fa-rotate-left",
+        text: "La fuerza brusca de los motores removió el fondo marino, creando una nube de arena que enturbió el agua por completo. El Guardián les pide pausar: 'La prisa sin cuidado destruye lo que busca salvar'. Aura les anima a reflexionar y reintentarlo con calma.",
+        reflection: "Aprendizaje: El error no es un fracaso, sino una oportunidad para aprender a actuar con sabiduría.",
+        options: [
+          {
+            text: "Reflexionar en la Bitácora y reiniciar con paciencia.",
+            next: "start"
+          }
+        ]
+      }
+    };
+
+    let currentState = {
+      currentNode: 'start',
+      badges: new Set(),
+      history: []
+    };
+
+    window.onload = function() {
+      renderNode('start');
+      initCanvas();
+    };
+
+    function renderNode(nodeKey) {
+      const node = storyNodes[nodeKey];
+      if (!node) return;
+
+      currentState.currentNode = nodeKey;
+      playSoundEffect(350, 'sine', 0.2);
+
+      // Actualizar información de pantalla
+      document.getElementById('chapter-num').innerText = node.chapter;
+      document.getElementById('node-title').innerText = node.title;
+      document.getElementById('node-location').innerHTML = node.location;
+      document.getElementById('node-text').innerText = node.text;
+      document.getElementById('depth-bar').style.width = node.depthPercent;
+
+      // Icono de la escena
+      const avatarContainer = document.getElementById('scene-avatar');
+      avatarContainer.innerHTML = `<i class="fa-solid ${node.icon}"></i>`;
+
+      // Reflexión pedagógica
+      const reflectionBox = document.getElementById('node-reflection-box');
+      if (node.reflection) {
+        reflectionBox.classList.remove('hidden');
+        document.getElementById('node-reflection-text').innerText = node.reflection;
+      } else {
+        reflectionBox.classList.add('hidden');
+      }
+
+      // Renderizar botones de opción
+      const container = document.getElementById('options-container');
+      container.innerHTML = '';
+
+      node.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = "w-full text-left p-4 rounded-2xl bg-ocean-950/90 border border-neon-cyan/30 hover:border-neon-cyan hover:bg-ocean-800/80 hover:shadow-glow-cyan transition-all duration-300 flex items-start gap-3.5 text-sm md:text-base text-slate-100 group active:scale-[0.99]";
+        
+        btn.innerHTML = `
+          <div class="mt-0.5 w-7 h-7 rounded-xl bg-ocean-900 border border-neon-cyan text-neon-cyan flex items-center justify-center text-xs font-bold group-hover:bg-neon-cyan group-hover:text-ocean-950 transition shadow-glow-cyan">
+            ${idx + 1}
+          </div>
+          <div class="flex-1">
+            <span>${opt.text}</span>
+          </div>
+        `;
+
+        btn.onclick = () => handleChoice(opt);
+        container.appendChild(btn);
+      });
+    }
+
+    function handleChoice(option) {
+      currentState.history.push(option.text);
+      updateHistoryUI();
+
+      if (option.badge) {
+        currentState.badges.add(option.badge);
+        unlockBadgeUI(option.badge);
+        playChime();
+      }
+
+      if (option.action === 'go_logbook') {
+        switchTab('logbook');
+      } else if (option.next) {
+        renderNode(option.next);
+      }
+    }
+
+    function unlockBadgeUI(badgeType) {
+      if (badgeType === 'empathy') {
+        const el = document.getElementById('badge-empathy');
+        el.className = "px-3 py-1.5 rounded-xl bg-neon-cyan/20 border border-neon-cyan text-neon-cyan text-xs font-bold flex items-center gap-2 shadow-glow-cyan";
+        showToast("Insignia Desbloqueada: Mirada Profunda", "neon-cyan");
+      } else if (badgeType === 'ecology') {
+        const el = document.getElementById('badge-ecology');
+        el.className = "px-3 py-1.5 rounded-xl bg-neon-gold/20 border border-neon-gold text-neon-gold text-xs font-bold flex items-center gap-2 shadow-glow-gold";
+        showToast("Insignia Desbloqueada: Equilibrio Natural", "neon-gold");
+      }
+    }
+
+    function updateHistoryUI() {
+      const list = document.getElementById('history-log');
+      list.innerHTML = currentState.history.map((item, idx) => `
+        <li class="flex items-start gap-2 bg-ocean-950 p-2 rounded-xl border border-ocean-800">
+          <span class="text-neon-cyan font-bold">${idx + 1}.</span>
+          <span class="text-slate-200">${item}</span>
+        </li>
+      `).join('');
+    }
+
+    function showToast(message, colorClass = "neon-cyan") {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `p-3.5 rounded-2xl bg-ocean-950 border border-${colorClass} text-white text-xs font-bold shadow-2xl flex items-center gap-3 transition-all duration-500 transform translate-x-12 opacity-0 pointer-events-auto`;
+      toast.innerHTML = `<i class="fa-solid fa-sparkles text-${colorClass}"></i> <span>${message}</span>`;
+      
+      container.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.classList.remove('translate-x-12', 'opacity-0');
+      }, 50);
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-x-12');
+        setTimeout(() => toast.remove(), 500);
+      }, 3500);
+    }
+
+    function switchTab(tabName) {
+      const views = ['story', 'bestiary', 'logbook', 'creator', 'teacher'];
+      views.forEach(v => {
+        const viewEl = document.getElementById(`view-${v}`);
+        if (viewEl) viewEl.classList.add('hidden');
+        
+        const btnEl = document.getElementById(`btn-tab-${v}`);
+        if (btnEl) {
+          btnEl.className = "tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-ocean-800/60 transition-all duration-300 flex items-center gap-2";
+        }
+      });
+
+      document.getElementById(`view-${tabName}`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`btn-tab-${tabName}`);
+      if (activeBtn) {
+        activeBtn.className = "tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 bg-gradient-to-r from-neon-cyan to-neon-blue text-ocean-950 shadow-glow-cyan flex items-center gap-2";
+      }
+
+      playSoundEffect(500, 'sine', 0.15);
+
+      if (tabName === 'creator') {
+        setTimeout(resizeCanvas, 100);
+      }
+    }
+
+    function saveLogbook() {
+      playChime();
+      showToast("¡Notas de bitácora guardadas en los archivos del Nautilus!", "neon-gold");
+    }
+
+    /* ==================== CANVAS LABORATORIO INTERACTIVO ==================== */
+    let canvas, ctx;
+    let drawing = false;
+    let currentColor = '#00f5d4';
+    let currentLineWidth = 8;
+
+    function initCanvas() {
+      canvas = document.getElementById('creature-canvas');
+      if (!canvas) return;
+
+      ctx = canvas.getContext('2d');
+      resizeCanvas();
+
+      window.addEventListener('resize', resizeCanvas);
+
+      canvas.addEventListener('mousedown', startDraw);
+      canvas.addEventListener('mouseup', stopDraw);
+      canvas.addEventListener('mousemove', draw);
+
+      canvas.addEventListener('touchstart', startDraw, {passive: true});
+      canvas.addEventListener('touchend', stopDraw, {passive: true});
+      canvas.addEventListener('touchmove', draw, {passive: true});
+    }
+
+    function resizeCanvas() {
+      if (!canvas || !canvas.parentElement) return;
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+      clearCanvas();
+    }
+
+    function setColor(color) {
+      currentColor = color;
+      playSoundEffect(600, 'sine', 0.1);
+    }
+
+    function setLineWidth(width) {
+      currentLineWidth = width;
+      playSoundEffect(500, 'sine', 0.1);
+    }
+
+    function clearCanvas() {
+      if (!ctx) return;
+      ctx.fillStyle = "#061024";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function startDraw(e) {
+      drawing = true;
+      draw(e);
+    }
+
+    function stopDraw() {
+      drawing = false;
+      if (ctx) ctx.beginPath();
+    }
+
+    function draw(e) {
+      if (!drawing || !ctx) return;
+
+      const rect = canvas.getBoundingClientRect();
+      const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
+      const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
+
+      ctx.lineWidth = currentLineWidth;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.strokeStyle = currentColor;
+      ctx.shadowBlur = 15;
+      ctx.shadowColor = currentColor;
+
+      ctx.lineTo(x, y);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+
+      playSoundEffect(200 + y, 'sine', 0.05);
+    }
+
+    function spawnCreatureFromCanvas() {
+      playChime();
+      showToast("¡Tu criatura luminosa ha sido liberada en el mar!", "neon-cyan");
+      clearCanvas();
+    }
+  </script>
+</body>
+</html>
