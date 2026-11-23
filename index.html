@@ -130,6 +130,16 @@
       animation: floaty 5s ease-in-out infinite;
     }
 
+    /* Rotación lenta para la brújula del panel de inmersión */
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .animate-spin-slow {
+      animation: spin-slow 8s linear infinite;
+    }
+
     /* Scrollbar Neón */
     ::-webkit-scrollbar {
       width: 10px;
@@ -159,7 +169,7 @@
       <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('story')">
         <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-neon-cyan via-neon-blue to-neon-purple p-0.5 shadow-glow-cyan floating-element">
           <div class="w-full h-full bg-ocean-950 rounded-[14px] flex items-center justify-center text-neon-cyan text-2xl">
-            <i class="fa-solid fa-water-waves"></i>
+            <i class="fa-solid fa-water"></i>
           </div>
         </div>
         <div>
@@ -181,7 +191,7 @@
           <i class="fa-solid fa-fish-fins text-neon-gold"></i> <span>Bestiario</span>
         </button>
         <button id="btn-tab-logbook" onclick="switchTab('logbook')" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-ocean-800/60 transition-all duration-300 flex items-center gap-2">
-          <i class="fa-solid fa-journal-whills text-neon-magenta"></i> <span>Bitácora</span>
+          <i class="fa-solid fa-book-open text-neon-magenta"></i> <span>Bitácora</span>
         </button>
         <button id="btn-tab-creator" onclick="switchTab('creator')" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-ocean-800/60 transition-all duration-300 flex items-center gap-2">
           <i class="fa-solid fa-wand-magic-sparkles text-neon-cyan"></i> <span>Laboratorio</span>
@@ -330,7 +340,7 @@
             <h3 class="font-display font-bold text-lg text-white mb-1">Sirena del Abismo (Aura)</h3>
             <span class="text-xs text-neon-cyan font-bold block mb-2">Bioluminiscencia: Cian Eléctrico</span>
             <p class="text-xs text-slate-300 leading-relaxed mb-3">
-              Sin aletas brillantes ni coronas doradas. Piel translúcida adaptable que emite ráfagas de luz pulsante para comunicarse en la penumbra.
+              Pez de aguas profundas de piel casi transparente. Produce luz cian mediante bioluminiscencia (una reacción química en células especiales) y la emite en destellos cortos para comunicarse y orientarse donde apenas llega el sol.
             </p>
             <div class="text-[10px] bg-ocean-950 p-2 rounded-lg border border-ocean-700 text-slate-400">
               <strong class="text-neon-gold">Lección:</strong> Las apariencias no definen el corazón de las criaturas.
@@ -345,7 +355,7 @@
             <h3 class="font-display font-bold text-lg text-white mb-1">Guardián del Coral Gris</h3>
             <span class="text-xs text-neon-magenta font-bold block mb-2">Bioluminiscencia: Púrpura Profundo</span>
             <p class="text-xs text-slate-300 leading-relaxed mb-3">
-              Ser de caparazón basáltico con líquenes marinos bioluminiscentes. Protege el arrecife de cambios bruscos de corriente.
+              Crustáceo de caparazón grueso cubierto de bacterias luminosas con las que vive en simbiosis. Se refugia entre las rocas del arrecife y, al excavar, remueve el sedimento y ayuda a mantener limpio el coral.
             </p>
             <div class="text-[10px] bg-ocean-950 p-2 rounded-lg border border-ocean-700 text-slate-400">
               <strong class="text-neon-gold">Lección:</strong> La paciencia y el respeto son la llave del ecosistema.
@@ -360,7 +370,7 @@
             <h3 class="font-display font-bold text-lg text-white mb-1">Medusa Sombrilla de Cristal</h3>
             <span class="text-xs text-neon-gold font-bold block mb-2">Bioluminiscencia: Ámbar Neón</span>
             <p class="text-xs text-slate-300 leading-relaxed mb-3">
-              Flota atrapando partículas de sedimento sobrantes. Funciona como el sistema de filtrado natural del Archipiélago.
+              Medusa de cuerpo gelatinoso y casi invisible. Se alimenta filtrando el plancton y las partículas que arrastra la corriente con sus tentáculos, por lo que ayuda a mantener el agua del Archipiélago más clara.
             </p>
             <div class="text-[10px] bg-ocean-950 p-2 rounded-lg border border-ocean-700 text-slate-400">
               <strong class="text-neon-gold">Lección:</strong> Cada ser, por pequeño que sea, tiene un rol vital.
@@ -375,7 +385,7 @@
             <h3 class="font-display font-bold text-lg text-white mb-1">Camarón Destello Arcoíris</h3>
             <span class="text-xs text-neon-lime font-bold block mb-2">Bioluminiscencia: Verde Lima Neón</span>
             <p class="text-xs text-slate-300 leading-relaxed mb-3">
-              Genera destellos deslumbrantes en cadena para ahuyentar depredadores y guiar a los navegantes perdidos.
+              Camarón de aguas profundas que expulsa una nube de líquido luminoso verde para confundir a sus depredadores y escapar. También usa su brillo en el vientre como contrailuminación: iguala la poca luz de arriba para no proyectar sombra y pasar desapercibido.
             </p>
             <div class="text-[10px] bg-ocean-950 p-2 rounded-lg border border-ocean-700 text-slate-400">
               <strong class="text-neon-gold">Lección:</strong> La cooperación multiplica la luz en la oscuridad.
@@ -392,7 +402,7 @@
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-neon-magenta/20">
           <div>
             <h2 class="text-2xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-neon-magenta via-neon-purple to-neon-cyan flex items-center gap-3">
-              <i class="fa-solid fa-journal-whills text-neon-magenta"></i> Bitácora del Explorador Marítimo
+              <i class="fa-solid fa-book-open text-neon-magenta"></i> Bitácora del Explorador Marítimo
             </h2>
             <p class="text-slate-300 text-sm">Registra tus observaciones críticas, hipótesis y aprendizajes del equipo.</p>
           </div>
@@ -583,24 +593,31 @@
 
     class Particle {
       constructor() {
-        this.reset();
+        this.reset(true);
       }
-      reset() {
+      reset(randomY = false) {
         this.x = Math.random() * bgCanvas.width;
-        this.y = Math.random() * bgCanvas.height;
+        // Al reaparecer, las partículas entran por la parte inferior; al iniciar se reparten por toda la pantalla.
+        this.y = randomY ? Math.random() * bgCanvas.height : bgCanvas.height + 10;
         this.size = Math.random() * 3 + 1;
-        this.speedX = (Math.random() - 0.5) * 0.5;
-        this.speedY = -Math.random() * 0.6 - 0.2;
+        // Deriva vertical lenta, con variedad: algunas partículas suben despacio y otras más rápido.
+        this.speedY = -(Math.random() * 0.5 + 0.12);
+        // Vaivén horizontal tipo corriente submarina: oscilación senoidal suave.
+        this.swayAmplitude = Math.random() * 0.4 + 0.15;
+        this.swayFrequency = Math.random() * 0.0012 + 0.0004;
+        this.swayPhase = Math.random() * Math.PI * 2;
+        // Pequeña deriva horizontal constante para que la corriente no sea perfectamente simétrica.
+        this.driftX = (Math.random() - 0.5) * 0.12;
         const colors = ['#00f5d4', '#f72585', '#ffd166', '#7b2cbf', '#4cc9f0'];
         this.color = colors[Math.floor(Math.random() * colors.length)];
         this.alpha = Math.random() * 0.7 + 0.2;
       }
-      update() {
-        this.x += this.speedX;
+      update(now) {
+        // Oscilación horizontal basada en seno (corriente) + deriva constante + ascenso.
+        this.x += Math.sin(now * this.swayFrequency + this.swayPhase) * this.swayAmplitude + this.driftX;
         this.y += this.speedY;
-        if (this.y < -10 || this.x < -10 || this.x > bgCanvas.width + 10) {
-          this.reset();
-          this.y = bgCanvas.height + 10;
+        if (this.y < -10 || this.x < -15 || this.x > bgCanvas.width + 15) {
+          this.reset(false);
         }
       }
       draw() {
@@ -616,19 +633,112 @@
       }
     }
 
+    // Burbujas ocasionales que ascienden con un leve bamboleo (ambiente, no saturación).
+    class Bubble {
+      constructor() {
+        this.reset(true);
+      }
+      reset(randomY = false) {
+        this.x = Math.random() * bgCanvas.width;
+        this.y = randomY ? Math.random() * bgCanvas.height : bgCanvas.height + 15;
+        this.radius = Math.random() * 4 + 2;
+        this.speedY = -(Math.random() * 0.4 + 0.25);
+        this.wobbleAmplitude = Math.random() * 0.5 + 0.2;
+        this.wobbleFrequency = Math.random() * 0.002 + 0.001;
+        this.wobblePhase = Math.random() * Math.PI * 2;
+        this.alpha = Math.random() * 0.18 + 0.07;
+      }
+      update(now) {
+        this.x += Math.sin(now * this.wobbleFrequency + this.wobblePhase) * this.wobbleAmplitude;
+        this.y += this.speedY;
+        // Las burbujas reales aceleran levemente al ascender (menos presión arriba).
+        this.speedY -= 0.0012;
+        // Reinicia al salir por arriba o si el bamboleo la lleva fuera por los lados.
+        if (this.y < -15 || this.x < -15 || this.x > bgCanvas.width + 15) {
+          this.reset(false);
+        }
+      }
+      draw() {
+        bgCtx.save();
+        bgCtx.globalAlpha = this.alpha;
+        bgCtx.strokeStyle = 'rgba(190, 240, 255, 0.9)';
+        bgCtx.lineWidth = 1;
+        bgCtx.beginPath();
+        bgCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        bgCtx.stroke();
+        // Pequeño reflejo para dar volumen a la burbuja.
+        bgCtx.globalAlpha = this.alpha * 1.6;
+        bgCtx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+        bgCtx.beginPath();
+        bgCtx.arc(this.x - this.radius * 0.3, this.y - this.radius * 0.3, this.radius * 0.28, 0, Math.PI * 2);
+        bgCtx.fill();
+        bgCtx.restore();
+      }
+    }
+
+    let bgBubbles = [];
+
     for (let i = 0; i < 45; i++) {
       bgParticles.push(new Particle());
     }
+    // Pocas burbujas para que se lean como ambiente sutil.
+    for (let i = 0; i < 8; i++) {
+      bgBubbles.push(new Bubble());
+    }
 
-    function animateBg() {
+    /* Rayos de luz / cáusticas: pocas franjas diagonales suaves que se desplazan lentamente
+       detrás de las partículas, con opacidad baja para no afectar la legibilidad del texto. */
+    const lightRays = [];
+    for (let i = 0; i < 3; i++) {
+      lightRays.push({
+        offset: Math.random(),
+        width: 0.18 + Math.random() * 0.12,
+        speed: 0.000018 + Math.random() * 0.000022,
+        phase: Math.random() * Math.PI * 2
+      });
+    }
+
+    function drawLightRays(now) {
+      const w = bgCanvas.width;
+      const h = bgCanvas.height;
+      bgCtx.save();
+      bgCtx.globalCompositeOperation = 'lighter';
+      lightRays.forEach(ray => {
+        // Desplazamiento lento y cíclico del centro del haz.
+        const center = ((Math.sin(now * ray.speed + ray.phase) * 0.5 + 0.5) * (1 + ray.width) - ray.width / 2) * w;
+        const halfW = ray.width * w;
+        const grad = bgCtx.createLinearGradient(center - halfW, 0, center + halfW, h);
+        grad.addColorStop(0, 'rgba(76, 201, 240, 0)');
+        grad.addColorStop(0.5, 'rgba(76, 201, 240, 0.05)');
+        grad.addColorStop(1, 'rgba(0, 245, 212, 0)');
+        bgCtx.fillStyle = grad;
+        bgCtx.beginPath();
+        bgCtx.moveTo(center - halfW, 0);
+        bgCtx.lineTo(center + halfW, 0);
+        bgCtx.lineTo(center + halfW * 2.2, h);
+        bgCtx.lineTo(center + halfW * 0.2, h);
+        bgCtx.closePath();
+        bgCtx.fill();
+      });
+      bgCtx.restore();
+    }
+
+    function animateBg(now) {
+      // now es el timestamp de requestAnimationFrame (ms); fallback para la primera llamada.
+      const t = now || 0;
       bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+      drawLightRays(t);
       bgParticles.forEach(p => {
-        p.update();
+        p.update(t);
         p.draw();
+      });
+      bgBubbles.forEach(b => {
+        b.update(t);
+        b.draw();
       });
       requestAnimationFrame(animateBg);
     }
-    animateBg();
+    requestAnimationFrame(animateBg);
 
     /* ==================== SINTETIZADOR DE AUDIO WEB AUDIO API ==================== */
     let audioCtx = null;
@@ -655,6 +765,90 @@
       } catch(e) {}
     }
 
+    /* Ambiente submarino continuo: ruido filtrado suave (corriente) + dron grave lento.
+       Se reutiliza audioCtx, respeta isPlayingAudio y no interfiere con los chimes ni el sonido
+       de dibujo (throttleado en FEAT-001), porque usa sus propios nodos con ganancia baja. */
+    let ambientNodes = null;
+
+    function startAmbient() {
+      if (!audioCtx || ambientNodes) return;
+      try {
+        // Buffer de ruido rosa/marrón aproximado para simular el murmullo del agua.
+        const bufferSize = audioCtx.sampleRate * 2;
+        const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const data = noiseBuffer.getChannelData(0);
+        let last = 0;
+        for (let i = 0; i < bufferSize; i++) {
+          const white = Math.random() * 2 - 1;
+          // Filtro de primer orden para suavizar (ruido marrón-ish), más parecido al agua.
+          last = (last + 0.02 * white) / 1.02;
+          data[i] = last * 3.2;
+        }
+        const noise = audioCtx.createBufferSource();
+        noise.buffer = noiseBuffer;
+        noise.loop = true;
+
+        const noiseFilter = audioCtx.createBiquadFilter();
+        noiseFilter.type = 'lowpass';
+        noiseFilter.frequency.value = 420;
+
+        const noiseGain = audioCtx.createGain();
+        noiseGain.gain.value = 0.0;
+        noiseGain.gain.setTargetAtTime(0.035, audioCtx.currentTime, 1.5);
+
+        noise.connect(noiseFilter);
+        noiseFilter.connect(noiseGain);
+        noiseGain.connect(audioCtx.destination);
+
+        // Dron grave lento para dar sensación de profundidad.
+        const drone = audioCtx.createOscillator();
+        drone.type = 'sine';
+        drone.frequency.value = 58;
+        const droneGain = audioCtx.createGain();
+        droneGain.gain.value = 0.0;
+        droneGain.gain.setTargetAtTime(0.03, audioCtx.currentTime, 2);
+
+        // LFO que modula lentamente el dron para que "respire" como el oleaje.
+        const lfo = audioCtx.createOscillator();
+        lfo.type = 'sine';
+        lfo.frequency.value = 0.08;
+        const lfoGain = audioCtx.createGain();
+        lfoGain.gain.value = 0.015;
+        lfo.connect(lfoGain);
+        lfoGain.connect(droneGain.gain);
+
+        drone.connect(droneGain);
+        droneGain.connect(audioCtx.destination);
+
+        noise.start();
+        drone.start();
+        lfo.start();
+
+        ambientNodes = { noise, noiseGain, drone, droneGain, lfo };
+      } catch (e) {
+        ambientNodes = null;
+      }
+    }
+
+    function stopAmbient() {
+      if (!ambientNodes) return;
+      try {
+        const now = audioCtx ? audioCtx.currentTime : 0;
+        // Desvanecer suavemente antes de detener para evitar clics.
+        ambientNodes.noiseGain.gain.setTargetAtTime(0.0001, now, 0.3);
+        ambientNodes.droneGain.gain.setTargetAtTime(0.0001, now, 0.3);
+        const nodes = ambientNodes;
+        setTimeout(() => {
+          try {
+            nodes.noise.stop();
+            nodes.drone.stop();
+            nodes.lfo.stop();
+          } catch (e) {}
+        }, 500);
+      } catch (e) {}
+      ambientNodes = null;
+    }
+
     function playChime() {
       if (!isPlayingAudio) return;
       const notes = [523.25, 659.25, 783.99, 1046.50]; // Do, Mi, Sol, Do
@@ -672,10 +866,12 @@
         }
         isPlayingAudio = true;
         btnIcon.className = "fa-solid fa-volume-high text-neon-cyan";
+        startAmbient();
         playChime();
         showToast("Audio y efectos de sonido activados", "neon-cyan");
       } else {
         isPlayingAudio = false;
+        stopAmbient();
         btnIcon.className = "fa-solid fa-volume-xmark text-neon-magenta";
         showToast("Audio desactivado", "neon-magenta");
       }
@@ -807,6 +1003,7 @@
     window.onload = function() {
       renderNode('start');
       initCanvas();
+      restoreLogbook();
     };
 
     function renderNode(nodeKey) {
@@ -875,34 +1072,67 @@
       }
     }
 
-    function unlockBadgeUI(badgeType) {
+    // silent=true aplica solo el estilo visual (para restaurar sin disparar toasts/chimes).
+    function unlockBadgeUI(badgeType, silent = false) {
       if (badgeType === 'empathy') {
         const el = document.getElementById('badge-empathy');
-        el.className = "px-3 py-1.5 rounded-xl bg-neon-cyan/20 border border-neon-cyan text-neon-cyan text-xs font-bold flex items-center gap-2 shadow-glow-cyan";
-        showToast("Insignia Desbloqueada: Mirada Profunda", "neon-cyan");
+        if (el) el.className = "px-3 py-1.5 rounded-xl bg-neon-cyan/20 border border-neon-cyan text-neon-cyan text-xs font-bold flex items-center gap-2 shadow-glow-cyan";
+        if (!silent) showToast("Insignia Desbloqueada: Mirada Profunda", "neon-cyan");
       } else if (badgeType === 'ecology') {
         const el = document.getElementById('badge-ecology');
-        el.className = "px-3 py-1.5 rounded-xl bg-neon-gold/20 border border-neon-gold text-neon-gold text-xs font-bold flex items-center gap-2 shadow-glow-gold";
-        showToast("Insignia Desbloqueada: Equilibrio Natural", "neon-gold");
+        if (el) el.className = "px-3 py-1.5 rounded-xl bg-neon-gold/20 border border-neon-gold text-neon-gold text-xs font-bold flex items-center gap-2 shadow-glow-gold";
+        if (!silent) showToast("Insignia Desbloqueada: Equilibrio Natural", "neon-gold");
       }
     }
 
     function updateHistoryUI() {
       const list = document.getElementById('history-log');
-      list.innerHTML = currentState.history.map((item, idx) => `
-        <li class="flex items-start gap-2 bg-ocean-950 p-2 rounded-xl border border-ocean-800">
-          <span class="text-neon-cyan font-bold">${idx + 1}.</span>
-          <span class="text-slate-200">${item}</span>
-        </li>
-      `).join('');
+      // Se construye cada <li> con createElement y el texto va por textContent:
+      // la bitácora se restaura desde localStorage (fuente de entrada manipulable),
+      // así que nunca se interpola texto de la historia dentro de innerHTML.
+      list.innerHTML = '';
+      currentState.history.forEach((item, idx) => {
+        const li = document.createElement('li');
+        li.className = "flex items-start gap-2 bg-ocean-950 p-2 rounded-xl border border-ocean-800";
+
+        const num = document.createElement('span');
+        num.className = "text-neon-cyan font-bold";
+        num.textContent = (idx + 1) + ".";
+
+        const text = document.createElement('span');
+        text.className = "text-slate-200";
+        text.textContent = item;
+
+        li.appendChild(num);
+        li.appendChild(text);
+        list.appendChild(li);
+      });
     }
+
+    // Mapa de colores a tokens literales completos de Tailwind.
+    // El motor JIT del CDN solo genera clases que aparecen como texto literal,
+    // por eso NO se pueden construir por interpolación (border-${color}).
+    const TOAST_COLORS = {
+      'neon-cyan':    { border: 'border-neon-cyan',    text: 'text-neon-cyan' },
+      'neon-magenta': { border: 'border-neon-magenta', text: 'text-neon-magenta' },
+      'neon-gold':    { border: 'border-neon-gold',    text: 'text-neon-gold' },
+      'neon-purple':  { border: 'border-neon-purple',  text: 'text-neon-purple' },
+      'neon-lime':    { border: 'border-neon-lime',    text: 'text-neon-lime' }
+    };
 
     function showToast(message, colorClass = "neon-cyan") {
       const container = document.getElementById('toast-container');
+      const palette = TOAST_COLORS[colorClass] || TOAST_COLORS['neon-cyan'];
       const toast = document.createElement('div');
-      toast.className = `p-3.5 rounded-2xl bg-ocean-950 border border-${colorClass} text-white text-xs font-bold shadow-2xl flex items-center gap-3 transition-all duration-500 transform translate-x-12 opacity-0 pointer-events-auto`;
-      toast.innerHTML = `<i class="fa-solid fa-sparkles text-${colorClass}"></i> <span>${message}</span>`;
-      
+      toast.className = `p-3.5 rounded-2xl bg-ocean-950 border ${palette.border} text-white text-xs font-bold shadow-2xl flex items-center gap-3 transition-all duration-500 transform translate-x-12 opacity-0 pointer-events-auto`;
+
+      const icon = document.createElement('i');
+      icon.className = `fa-solid fa-wand-sparkles ${palette.text}`;
+      const label = document.createElement('span');
+      label.textContent = message;
+      toast.appendChild(icon);
+      toast.appendChild(label);
+
       container.appendChild(toast);
       
       setTimeout(() => {
@@ -940,9 +1170,54 @@
       }
     }
 
+    const BITACORA_STORAGE_KEY = 'archipielago_bitacora';
+
     function saveLogbook() {
+      try {
+        const r1 = document.getElementById('log-reflection-1');
+        const r2 = document.getElementById('log-reflection-2');
+        const data = {
+          reflection1: r1 ? r1.value : '',
+          reflection2: r2 ? r2.value : '',
+          history: currentState.history,
+          badges: Array.from(currentState.badges)
+        };
+        localStorage.setItem(BITACORA_STORAGE_KEY, JSON.stringify(data));
+      } catch (e) {
+        // Almacenamiento deshabilitado: no romper la página.
+      }
       playChime();
       showToast("¡Notas de bitácora guardadas en los archivos del Nautilus!", "neon-gold");
+    }
+
+    // Restaura el estado de la bitácora desde localStorage sin disparar toasts/chimes.
+    function restoreLogbook() {
+      let data;
+      try {
+        const raw = localStorage.getItem(BITACORA_STORAGE_KEY);
+        if (!raw) return;
+        data = JSON.parse(raw);
+      } catch (e) {
+        return;
+      }
+      if (!data) return;
+
+      const r1 = document.getElementById('log-reflection-1');
+      const r2 = document.getElementById('log-reflection-2');
+      if (r1 && typeof data.reflection1 === 'string') r1.value = data.reflection1;
+      if (r2 && typeof data.reflection2 === 'string') r2.value = data.reflection2;
+
+      if (Array.isArray(data.history)) {
+        currentState.history = data.history.slice();
+        updateHistoryUI();
+      }
+
+      if (Array.isArray(data.badges)) {
+        data.badges.forEach(badge => {
+          currentState.badges.add(badge);
+          unlockBadgeUI(badge, true);
+        });
+      }
     }
 
     /* ==================== CANVAS LABORATORIO INTERACTIVO ==================== */
@@ -964,9 +1239,25 @@
       canvas.addEventListener('mouseup', stopDraw);
       canvas.addEventListener('mousemove', draw);
 
-      canvas.addEventListener('touchstart', startDraw, {passive: true});
-      canvas.addEventListener('touchend', stopDraw, {passive: true});
-      canvas.addEventListener('touchmove', draw, {passive: true});
+      // passive:false para poder llamar preventDefault() y evitar que la página
+      // haga scroll mientras se dibuja con el dedo en móvil.
+      canvas.addEventListener('touchstart', startDraw, {passive: false});
+      canvas.addEventListener('touchend', stopDraw, {passive: false});
+      canvas.addEventListener('touchmove', draw, {passive: false});
+    }
+
+    // Extrae las coordenadas x/y relativas al canvas tanto para ratón como para tacto.
+    function getCanvasPoint(e) {
+      const rect = canvas.getBoundingClientRect();
+      let clientX, clientY;
+      if (e.touches && e.touches.length) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      } else {
+        clientX = e.clientX;
+        clientY = e.clientY;
+      }
+      return { x: clientX - rect.left, y: clientY - rect.top };
     }
 
     function resizeCanvas() {
@@ -992,9 +1283,16 @@
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 
+    let lastDrawSound = 0;
+
     function startDraw(e) {
+      if (!ctx) return;
+      if (e.touches) e.preventDefault();
       drawing = true;
-      draw(e);
+      const { x, y } = getCanvasPoint(e);
+      // Inicia un nuevo trazo en el punto de partida sin dibujar todavía.
+      ctx.beginPath();
+      ctx.moveTo(x, y);
     }
 
     function stopDraw() {
@@ -1004,10 +1302,9 @@
 
     function draw(e) {
       if (!drawing || !ctx) return;
+      if (e.touches) e.preventDefault();
 
-      const rect = canvas.getBoundingClientRect();
-      const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
-      const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
+      const { x, y } = getCanvasPoint(e);
 
       ctx.lineWidth = currentLineWidth;
       ctx.lineCap = 'round';
@@ -1016,12 +1313,18 @@
       ctx.shadowBlur = 15;
       ctx.shadowColor = currentColor;
 
+      // Trazo continuo: extiende la ruta actual sin reiniciarla en cada segmento.
       ctx.lineTo(x, y);
       ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(x, y);
 
-      playSoundEffect(200 + y, 'sine', 0.05);
+      // Sonido acotado a un rango audible y limitado en frecuencia de disparo.
+      const now = performance.now();
+      if (now - lastDrawSound > 70) {
+        const ratio = canvas.height ? Math.min(Math.max(y / canvas.height, 0), 1) : 0;
+        const freq = 200 + ratio * 400; // 200-600 Hz
+        playSoundEffect(freq, 'sine', 0.05);
+        lastDrawSound = now;
+      }
     }
 
     function spawnCreatureFromCanvas() {
