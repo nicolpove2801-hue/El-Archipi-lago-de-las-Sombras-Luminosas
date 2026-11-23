@@ -651,7 +651,10 @@
       update(now) {
         this.x += Math.sin(now * this.wobbleFrequency + this.wobblePhase) * this.wobbleAmplitude;
         this.y += this.speedY;
-        if (this.y < -15) {
+        // Las burbujas reales aceleran levemente al ascender (menos presión arriba).
+        this.speedY -= 0.0012;
+        // Reinicia al salir por arriba o si el bamboleo la lleva fuera por los lados.
+        if (this.y < -15 || this.x < -15 || this.x > bgCanvas.width + 15) {
           this.reset(false);
         }
       }
@@ -1084,12 +1087,26 @@
 
     function updateHistoryUI() {
       const list = document.getElementById('history-log');
-      list.innerHTML = currentState.history.map((item, idx) => `
-        <li class="flex items-start gap-2 bg-ocean-950 p-2 rounded-xl border border-ocean-800">
-          <span class="text-neon-cyan font-bold">${idx + 1}.</span>
-          <span class="text-slate-200">${item}</span>
-        </li>
-      `).join('');
+      // Se construye cada <li> con createElement y el texto va por textContent:
+      // la bitácora se restaura desde localStorage (fuente de entrada manipulable),
+      // así que nunca se interpola texto de la historia dentro de innerHTML.
+      list.innerHTML = '';
+      currentState.history.forEach((item, idx) => {
+        const li = document.createElement('li');
+        li.className = "flex items-start gap-2 bg-ocean-950 p-2 rounded-xl border border-ocean-800";
+
+        const num = document.createElement('span');
+        num.className = "text-neon-cyan font-bold";
+        num.textContent = (idx + 1) + ".";
+
+        const text = document.createElement('span');
+        text.className = "text-slate-200";
+        text.textContent = item;
+
+        li.appendChild(num);
+        li.appendChild(text);
+        list.appendChild(li);
+      });
     }
 
     // Mapa de colores a tokens literales completos de Tailwind.
