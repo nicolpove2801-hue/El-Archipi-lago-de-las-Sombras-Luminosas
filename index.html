@@ -199,6 +199,9 @@
         <button id="btn-tab-teacher" onclick="switchTab('teacher')" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-ocean-800/60 transition-all duration-300 flex items-center gap-2">
           <i class="fa-solid fa-graduation-cap text-neon-lime"></i> <span>Guía Docente</span>
         </button>
+        <button id="btn-tab-media" onclick="switchTab('media')" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-ocean-800/60 transition-all duration-300 flex items-center gap-2">
+          <i class="fa-solid fa-photo-film text-neon-purple"></i> <span>Multimedia</span>
+        </button>
       </nav>
 
       <!-- Botón de Audio Sintetizado y Efectos -->
@@ -574,6 +577,105 @@
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- ==================== VISTA 6: MULTIMEDIA (VIDEO Y PODCAST) ==================== -->
+    <section id="view-media" class="hidden space-y-6">
+
+      <!-- Encabezado de la sección -->
+      <div class="glass-neon p-4 rounded-2xl flex items-center gap-3 border-l-4 border-l-neon-purple">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-neon-purple to-neon-magenta p-0.5 shadow-glow-magenta flex-shrink-0">
+          <div class="w-full h-full bg-ocean-950 rounded-[14px] flex items-center justify-center text-neon-purple text-xl">
+            <i class="fa-solid fa-photo-film"></i>
+          </div>
+        </div>
+        <div>
+          <span class="text-xs uppercase tracking-widest text-neon-purple font-bold flex items-center gap-1">
+            <i class="fa-solid fa-film"></i> Archivo Multimedia del Nautilus II
+          </span>
+          <h2 class="text-base md:text-lg font-bold text-white">Video y pódcast sobre el océano y la bioluminiscencia</h2>
+        </div>
+      </div>
+
+      <!-- Nota de honestidad sobre los recursos sugeridos -->
+      <div class="glass-neon p-4 rounded-2xl border border-neon-gold/30 flex items-start gap-3 text-sm text-slate-300">
+        <i class="fa-solid fa-circle-info text-neon-gold text-lg mt-0.5"></i>
+        <p>
+          Recursos sugeridos; puedes reemplazar el video o el pódcast por el enlace que prefieras
+          editando el <code class="text-neon-cyan">src</code> del <code class="text-neon-cyan">iframe</code>
+          correspondiente en <code class="text-neon-cyan">index.html</code>.
+        </p>
+      </div>
+
+      <!-- Tarjeta de VIDEO -->
+      <div class="glass-neon-card p-6 rounded-2xl border border-neon-cyan/30 space-y-4">
+        <h3 class="font-display font-bold text-lg text-neon-cyan flex items-center gap-2">
+          <i class="fa-solid fa-film"></i> Video: El mundo de la bioluminiscencia
+        </h3>
+
+        <!-- Contenedor responsivo 16:9 para el video de YouTube -->
+        <!--
+          CÓMO CAMBIAR EL VIDEO:
+          Sustituye el ID "jCL0mhCnWDo" en el atributo src por el ID del video de YouTube
+          que prefieras. El ID es la parte final de la URL (youtube.com/watch?v=ESTE_ID o youtu.be/ESTE_ID).
+          Mantén el formato https://www.youtube.com/embed/ID_DEL_VIDEO
+        -->
+        <div class="aspect-video w-full rounded-xl overflow-hidden border border-neon-cyan/40 shadow-glow-cyan bg-ocean-950">
+          <iframe
+            class="w-full h-full"
+            src="https://www.youtube.com/embed/jCL0mhCnWDo"
+            title="Edith Widder: El extraño y maravilloso mundo de la bioluminiscencia (charla TED)"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <p class="text-sm text-slate-300 leading-relaxed">
+          La <span class="text-neon-cyan font-semibold">bioluminiscencia marina</span> es la capacidad de
+          muchos organismos del océano profundo (peces, medusas, calamares y plancton) para producir su
+          propia luz mediante reacciones químicas. En la oscuridad del abismo, esa luz sirve para cazar,
+          comunicarse, defenderse o atraer pareja. Es exactamente el fenómeno que inspira a
+          <span class="text-neon-gold font-semibold">El Archipiélago de las Sombras Luminosas</span>:
+          las criaturas que exploras en la Historia y el Bestiario se basan en estas adaptaciones reales
+          del mar profundo.
+        </p>
+      </div>
+
+      <!-- Tarjeta de PODCAST -->
+      <div class="glass-neon-card p-6 rounded-2xl border border-neon-magenta/30 space-y-4">
+        <h3 class="font-display font-bold text-lg text-neon-magenta flex items-center gap-2">
+          <i class="fa-solid fa-podcast"></i> Pódcast: divulgación científica del océano
+        </h3>
+
+        <!-- Reproductor embebido de Spotify, responsivo (ancho 100%) -->
+        <!--
+          CÓMO CAMBIAR EL PODCAST:
+          Sustituye el ID "2rhQIcCsDr0NNbWJM0ESVP" en el atributo src por el ID del programa (show)
+          o episodio de Spotify que prefieras. En Spotify: Compartir > Insertar programa/episodio,
+          y copia el ID que aparece tras /embed/show/ o /embed/episode/ en la URL del iframe.
+          Formato: https://open.spotify.com/embed/show/ID_DEL_PROGRAMA
+        -->
+        <div class="w-full rounded-xl overflow-hidden border border-neon-magenta/40 shadow-glow-magenta bg-ocean-950">
+          <iframe
+            class="w-full"
+            style="height: 352px;"
+            src="https://open.spotify.com/embed/show/2rhQIcCsDr0NNbWJM0ESVP"
+            title="Pódcast de divulgación científica sobre el océano y la naturaleza"
+            loading="lazy"
+            allow="encrypted-media"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <p class="text-sm text-slate-300 leading-relaxed">
+          Para seguir explorando el mar más allá de la narrativa, este pódcast de
+          <span class="text-neon-magenta font-semibold">divulgación científica</span> acerca los temas de
+          naturaleza y océano con un tono accesible, ideal para complementar las lecciones del Bestiario
+          y la Guía Docente.
+        </p>
+      </div>
+
     </section>
 
   </main>
@@ -1146,7 +1248,7 @@
     }
 
     function switchTab(tabName) {
-      const views = ['story', 'bestiary', 'logbook', 'creator', 'teacher'];
+      const views = ['story', 'bestiary', 'logbook', 'creator', 'teacher', 'media'];
       views.forEach(v => {
         const viewEl = document.getElementById(`view-${v}`);
         if (viewEl) viewEl.classList.add('hidden');

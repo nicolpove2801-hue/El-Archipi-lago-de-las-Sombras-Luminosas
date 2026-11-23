@@ -1,6 +1,6 @@
 # El Archipiélago de las Sombras Luminosas
 
-"El Archipiélago de las Sombras Luminosas" es una experiencia educativa interactiva en español: una narrativa marina bifurcada con 5 pestañas (Historia, Bestiario, Bitácora, Laboratorio de dibujo en canvas y Guía Docente), partículas animadas de fondo, audio sintetizado con la Web Audio API e insignias pedagógicas.
+"El Archipiélago de las Sombras Luminosas" es una experiencia educativa interactiva en español: una narrativa marina bifurcada con 6 pestañas (Historia, Bestiario, Bitácora, Laboratorio de dibujo en canvas, Guía Docente y Multimedia), partículas animadas de fondo, audio sintetizado con la Web Audio API e insignias pedagógicas.
 
 Es una página estática de un solo archivo (`index.html`) construida con HTML, Tailwind (vía CDN), FontAwesome 6.4.0 Free, Google Fonts y JavaScript vanilla embebido. No requiere instalación ni build: basta con abrirla en el navegador.
 
@@ -27,6 +27,15 @@ Puedes ver el proyecto publicado en GitHub Pages aquí: [El Archipiélago de las
 - Burbujas ascendentes con bamboleo.
 - Sonido ambiental más creíble: ruido filtrado paso-bajo (murmullo de agua) + dron grave modulado por un LFO, al activar el audio.
 - Bestiario con descripciones biológicamente más plausibles (reacción química, simbiosis bacteriana, filtración de plancton, contrailuminación), manteniendo el tono educativo en español.
+
+## Multimedia
+
+Se añadió una sexta pestaña **"Multimedia"** que reúne contenido audiovisual sobre el mismo tema del proyecto: el océano y la bioluminiscencia.
+
+- **Video**: la charla TED de Edith Widder, *"The weird, wonderful world of bioluminescence"*, incrustada desde YouTube (ID `jCL0mhCnWDo`) dentro de un contenedor responsivo con relación de aspecto 16:9.
+- **Pódcast**: un programa de divulgación científica incrustado mediante el reproductor de Spotify (show ID `2rhQIcCsDr0NNbWJM0ESVP`).
+
+> **Nota**: ambos son recursos sugeridos y se pueden reemplazar fácilmente editando el atributo `src` del `iframe` correspondiente en `index.html`. Junto a cada `iframe` hay comentarios HTML que explican cómo hacerlo.
 
 ## Cómo verlo / ejecutarlo
 
